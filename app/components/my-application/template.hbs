@@ -1,32 +1,40 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    {{navbar-header}}
+<div id="navigation-bar" class="container-fluid">
+  {{#md-navbar name='theDirectory' class='blue darken-1' homeRoute='index'}}
+    <!-- A workaround to get the "active" class
+      to apply to the active <li> automatically -->
+    {{#if isAuthenticated}}
+    {{!-- {{#link-to 'houses' tagName='li'}}
+      {{link-to 'Houses' 'houses'}}
+    {{/link-to}}
+    {{#link-to 'units' tagName='li'}}
+      {{link-to 'Units' 'units'}}
+    {{/link-to}} --}}
+    {{#link-to 'change-password' tagName='li'}}
+      {{link-to 'ChangePW' 'change-password'}}
+    {{/link-to}}
+    <!-- Log out button-->
+    {{md-btn text='Log Out'
+    	action='signOut'
+    	class='btn-large red white-text text-darken-3'}}
+    <!-- Show sign-in/sign-up if not authenticated-->
+    {{else}}
+    {{#link-to 'sign-up' tagName='li'}}
+      {{link-to 'Sign Up' 'sign-up'}}
+    {{/link-to}}
+    {{#link-to 'sign-in' tagName='li'}}
+      {{link-to 'Login' 'sign-in'}}
+    {{/link-to}}
+    {{/if}}
+  {{/md-navbar}}
+</div>
 
-    <div class="collapse navbar-collapse" id="navigation">
-      <ul class="nav navbar-nav">
-        {{#if isAuthenticated}}
-        <li>{{#link-to "users"}}Users{{/link-to}}</li>
-        {{/if}}
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        {{#if isAuthenticated}}
-        <li>{{#link-to "change-password"}}Change Password{{/link-to}}</li>
-        <li><a href="#" {{action "signOut"}}>Sign Out</a></li>
-        {{else}}
-        <li>{{#link-to "sign-up"}}Sign Up{{/link-to}}</li>
-        <li>{{#link-to "sign-in"}}Sign In{{/link-to}}</li>
-        {{/if}}
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<h1>Welcome to Ember!</h1>
-
-{{#each flashMessages.queue as |flash|}}
-  {{flash-message flash=flash}}
-{{/each}}
-
-<div class="col-md-8 col-md-offset-2">
+<main id="main-content" class="container">
+  {{#each flashMessages.queue as |flash|}}
+    {{flash-message flash=flash}}
+  {{/each}}
   {{outlet}}
+</main>
+
+<div id="footer">
+  {{application-footer}}
 </div>
